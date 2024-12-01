@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-light text-gray-900;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-2 rounded-full font-medium transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-black hover:shadow-lg hover:shadow-primary/30;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary/10;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  @keyframes gradient-xy {
+    0%, 100% {
+      background-size: 400% 400%;
+      background-position: left top;
+    }
+    25% {
+      background-size: 400% 400%;
+      background-position: right top;
+    }
+    50% {
+      background-size: 400% 400%;
+      background-position: right bottom;
+    }
+    75% {
+      background-size: 400% 400%;
+      background-position: left bottom;
+    }
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 15s ease infinite;
+  }
+
+  .green-pink-gradient {
+    @apply bg-gradient-to-r from-green-400 to-pink-500;
+  }
+}
