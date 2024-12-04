@@ -3,13 +3,22 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import emailjs from 'emailjs-com';
 import LogoBall from './LogoBall copy';
+import { Field, Label, Textarea } from '@headlessui/react';
+import clsx from 'clsx';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -17,10 +26,21 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: '' })); // Efface l'erreur correspondante
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validation des champs
+    const newErrors = {};
+    if (!formData.name) newErrors.name = 'Le champ "Nom" est requis.';
+    if (!formData.email) newErrors.email = 'Le champ "Email" est requis.';
+    if (!formData.message) newErrors.message = 'Le champ "Description" est requis.';
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     setIsSending(true);
     setErrorMessage('');
@@ -31,9 +51,9 @@ const Contact = () => {
         'service_r79xpxm', // Ton service ID
         'template_42zkzzi', // Ton template ID
         {
-          from_name: formData.name,         // Nom de l'expéditeur
-          from_email: formData.email,       // Email de l'expéditeur
-          message: formData.message,        // Message
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
         },
         'UIeefX0jaDtijciZ0' // Ton User ID
       );
@@ -80,8 +100,8 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            {/* Info de contact */}
-            <div className="flex items-start space-x-4">
+                {/* Info de contact */}
+                <div className="flex items-start space-x-4">
               <Mail className="w-6 h-6 text-primary mt-1" />
               <div>
                 <h3 className="text-lg font-semibold mb-1">Email Us</h3>
@@ -102,53 +122,77 @@ const Contact = () => {
                 <p className="text-gray-600">123 Innovation Hub, Tech District<br />Nairobi, Kenya</p>
               </div>
             </div>
-
-            {/* Formulaire de contact */}
+            
             <form onSubmit={handleSubmit} className="space-y-6 mt-8">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20"
-                />
+              {/* Nom */}
+              <div className="w-full max-w-md px-4">
+                <Field>
+                  <Label className="text-sm/6 font-medium text-black">Nom</Label>
+                  <Textarea
+                    className={clsx(
+                      'mt-3 block w-full resize-none rounded-lg border border-gray-300 bg-white py-1.5 px-3 text-sm/6 text-black',
+                      'focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-200'
+                    )}
+                    rows={1}
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                  {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name}</p>}
+                </Field>
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20"
-                />
+
+              {/* Email */}
+              <div className="w-full max-w-md px-4">
+                <Field>
+                  <Label className="text-sm/6 font-medium text-black">Email</Label>
+                  <Textarea
+                    className={clsx(
+                      'mt-3 block w-full resize-none rounded-lg border border-gray-300 bg-white py-1.5 px-3 text-sm/6 text-black',
+                      'focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-200'
+                    )}
+                    rows={1}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                  {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
+                </Field>
               </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20"
-                ></textarea>
+
+              {/* Description */}
+              <div className="w-full max-w-md px-4">
+                <Field>
+                  <Label className="text-sm/6 font-medium text-black">Description</Label>
+                  <Textarea
+                    className={clsx(
+                      'mt-3 block w-full resize-none rounded-lg border border-gray-300 bg-white py-1.5 px-3 text-sm/6 text-black',
+                      'focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-200'
+                    )}
+                    rows={5} // Agrandissement du champ
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                  {errors.message && <p className="text-red-600 text-sm mt-1">{errors.message}</p>}
+                </Field>
               </div>
-              <button
-                type="submit"
-                disabled={isSending}
-                className="w-full bg-primary text-black font-semibold py-3 px-6 rounded-lg hover:shadow-lg transition-shadow duration-300"
-              >
-                {isSending ? 'Envoi en cours...' : 'Envoyer'}
-              </button>
+
+              {/* Bouton d'envoi */}
+              <div className="flex justify-center mt-4">
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-auto bg-primary text-black font-semibold py-2 px-4 rounded-full border border-gray-300 hover:shadow-md transition-shadow duration-300"
+                >
+                  {isSending ? 'Envoi en cours...' : 'Envoyer'}
+                </button>
+              </div>
             </form>
 
-            {isSent && <p className="text-green-600">Message envoyé avec succès !</p>}
-            {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+            {/* Message de succès ou erreur générale */}
+            {isSent && <p className="text-green-600 text-center mt-4">Message envoyé avec succès !</p>}
+            {errorMessage && <p className="text-red-600 text-center mt-4">{errorMessage}</p>}
           </motion.div>
         </div>
       </div>
