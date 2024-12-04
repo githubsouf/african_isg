@@ -170,14 +170,11 @@ const Services = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#f9d322] to-[#e32b24] bg-clip-text text-transparent">
-            Strategic areas of activity
+         <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#f9d322] to-[#e32b24] bg-clip-text text-transparent">
+            Domaines stratégiques d'activité
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Development strategies in Africa often face major governance
-            challenges preventing an evolution towards a smart society. This
-            calls on us to react with appropriate and adapted mechanisms to
-            strengthen "smart governance in Africa."
+          Les stratégies de développement en Afrique rencontrent souvent des défis majeurs en matière de gouvernance, empêchant une évolution vers une société intelligente. Cela nous appelle à réagir avec des mécanismes appropriés et adaptés pour renforcer la "gouvernance intelligente en Afrique".
           </p>
         </motion.div>
 
