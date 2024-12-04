@@ -13,6 +13,7 @@ const Modal = ({ isOpen, onClose, onContact }: ModalProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* Fond semi-transparent */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -20,35 +21,39 @@ const Modal = ({ isOpen, onClose, onContact }: ModalProps) => {
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
             onClick={onClose}
           />
+
+          {/* Conteneur de la modale */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed align-center left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="fixed inset-0 z-50 flex justify-center items-center"
           >
-            <div className="bg-white rounded-xl shadow-2xl p-6 m-4">
+            <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 relative">
+              {/* Bouton de fermeture */}
               <button
                 onClick={onClose}
-                className="absolute right-8 top-8 text-gray-500 hover:text-gray-700"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
               >
                 <X className="w-6 h-6" />
               </button>
-              
-              <div className="text-center mt-4">
+
+              {/* Contenu */}
+              <div className="text-center">
                 <h3 className="text-2xl font-bold mb-4">Intéressé par nos services ?</h3>
                 <p className="text-gray-600 mb-6">
-                     Discutons de la manière dont nous pouvons aider à transformer votre entreprise grâce à des solutions numériques innovantes.
+                  Discutons de la manière dont nous pouvons aider à transformer votre entreprise grâce à des solutions numériques innovantes.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={onContact}
-                    className="btn btn-primary"
+                    className="w-full sm:w-auto bg-primary text-white font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition-shadow duration-300"
                   >
                     Contact Us Now
                   </button>
                   <button
                     onClick={onClose}
-                    className="btn btn-outline"
+                    className="w-full sm:w-auto bg-transparent border border-primary text-primary font-semibold py-2 px-4 rounded-lg hover:bg-primary hover:text-white transition-colors duration-300"
                   >
                     Maybe Later
                   </button>
